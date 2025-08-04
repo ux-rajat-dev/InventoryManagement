@@ -1,6 +1,7 @@
 using InventoryManagement.Interface;
 using InventoryManagement.Models;
 using InventoryManagement.Service;
+using InventoryManagement.Services;
 using Microsoft.EntityFrameworkCore;
 using YourNamespace.Service;
 
@@ -17,6 +18,9 @@ builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPurchaseItemService, PurchaseItemService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ISaleService, SaleService>();
+builder.Services.AddScoped<IPurchaseService, PurchaseService>();
+builder.Services.AddScoped<ISaleItemService, SalesItemService>();
 
 
 
