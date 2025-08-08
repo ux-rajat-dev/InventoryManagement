@@ -13,7 +13,7 @@ public partial class StockTransaction
 
     public int TypeId { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     public int? CreatedByUserId { get; set; }
 

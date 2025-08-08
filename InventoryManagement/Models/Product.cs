@@ -19,7 +19,7 @@ public partial class Product
 
     public int Quantity { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     public virtual Category? Category { get; set; }
 

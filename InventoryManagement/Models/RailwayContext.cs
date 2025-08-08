@@ -40,19 +40,18 @@ public partial class InventoryDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=sql12.freesqldatabase.com;port=3306;database=sql12792776;user=sql12792776;password=L9x63gSzm6", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.5.62-mysql"));
+        => optionsBuilder.UseMySql("server=centerbeam.proxy.rlwy.net;port=17852;database=railway;user=root;password=WMKXdQloMPoqOOdnCgSfQxfSCZXFvpcx", Microsoft.EntityFrameworkCore.ServerVersion.Parse("9.4.0-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .UseCollation("latin1_swedish_ci")
-            .HasCharSet("latin1");
+            .UseCollation("utf8mb4_0900_ai_ci")
+            .HasCharSet("utf8mb4");
 
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.CategoryId).HasName("PRIMARY");
 
-            entity.Property(e => e.CategoryId).HasColumnType("int(11)");
             entity.Property(e => e.Name).HasMaxLength(100);
         });
 
@@ -60,7 +59,6 @@ public partial class InventoryDbContext : DbContext
         {
             entity.HasKey(e => e.CustomerId).HasName("PRIMARY");
 
-            entity.Property(e => e.CustomerId).HasColumnType("int(11)");
             entity.Property(e => e.Address).HasColumnType("text");
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FullName).HasMaxLength(100);
@@ -77,17 +75,13 @@ public partial class InventoryDbContext : DbContext
 
             entity.HasIndex(e => e.SupplierId, "SupplierId");
 
-            entity.Property(e => e.ProductId).HasColumnType("int(11)");
-            entity.Property(e => e.CategoryId).HasColumnType("int(11)");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp");
+                .HasColumnType("datetime");
             entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.Quantity).HasColumnType("int(11)");
             entity.Property(e => e.Sku)
                 .HasMaxLength(50)
                 .HasColumnName("SKU");
-            entity.Property(e => e.SupplierId).HasColumnType("int(11)");
             entity.Property(e => e.UnitPrice).HasPrecision(10, 2);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
@@ -107,12 +101,9 @@ public partial class InventoryDbContext : DbContext
 
             entity.HasIndex(e => e.SupplierId, "SupplierId");
 
-            entity.Property(e => e.PurchaseId).HasColumnType("int(11)");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp");
-            entity.Property(e => e.CreatedByUserId).HasColumnType("int(11)");
-            entity.Property(e => e.SupplierId).HasColumnType("int(11)");
+                .HasColumnType("datetime");
             entity.Property(e => e.TotalAmount).HasPrecision(10, 2);
 
             entity.HasOne(d => d.CreatedByUser).WithMany(p => p.Purchases)
@@ -133,10 +124,6 @@ public partial class InventoryDbContext : DbContext
 
             entity.HasIndex(e => e.PurchaseId, "PurchaseId");
 
-            entity.Property(e => e.PurchaseItemId).HasColumnType("int(11)");
-            entity.Property(e => e.ProductId).HasColumnType("int(11)");
-            entity.Property(e => e.PurchaseId).HasColumnType("int(11)");
-            entity.Property(e => e.Quantity).HasColumnType("int(11)");
             entity.Property(e => e.TotalPrice).HasPrecision(10, 2);
             entity.Property(e => e.UnitPrice).HasPrecision(10, 2);
 
@@ -159,12 +146,9 @@ public partial class InventoryDbContext : DbContext
 
             entity.HasIndex(e => e.CustomerId, "CustomerId");
 
-            entity.Property(e => e.SaleId).HasColumnType("int(11)");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp");
-            entity.Property(e => e.CreatedByUserId).HasColumnType("int(11)");
-            entity.Property(e => e.CustomerId).HasColumnType("int(11)");
+                .HasColumnType("datetime");
             entity.Property(e => e.TotalAmount).HasPrecision(10, 2);
 
             entity.HasOne(d => d.CreatedByUser).WithMany(p => p.Sales)
@@ -185,10 +169,6 @@ public partial class InventoryDbContext : DbContext
 
             entity.HasIndex(e => e.SaleId, "SaleId");
 
-            entity.Property(e => e.SalesItemId).HasColumnType("int(11)");
-            entity.Property(e => e.ProductId).HasColumnType("int(11)");
-            entity.Property(e => e.Quantity).HasColumnType("int(11)");
-            entity.Property(e => e.SaleId).HasColumnType("int(11)");
             entity.Property(e => e.TotalPrice).HasPrecision(10, 2);
             entity.Property(e => e.UnitPrice).HasPrecision(10, 2);
 
@@ -213,14 +193,9 @@ public partial class InventoryDbContext : DbContext
 
             entity.HasIndex(e => e.TypeId, "TypeId");
 
-            entity.Property(e => e.TransactionId).HasColumnType("int(11)");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp");
-            entity.Property(e => e.CreatedByUserId).HasColumnType("int(11)");
-            entity.Property(e => e.ProductId).HasColumnType("int(11)");
-            entity.Property(e => e.Quantity).HasColumnType("int(11)");
-            entity.Property(e => e.TypeId).HasColumnType("int(11)");
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.CreatedByUser).WithMany(p => p.StockTransactions)
                 .HasForeignKey(d => d.CreatedByUserId)
@@ -241,15 +216,13 @@ public partial class InventoryDbContext : DbContext
         {
             entity.HasKey(e => e.TypeId).HasName("PRIMARY");
 
-            entity.Property(e => e.TypeId).HasColumnType("int(11)");
-            entity.Property(e => e.TypeName).HasColumnType("enum('Stock-In','Stock-Out')");
+            entity.Property(e => e.TypeName).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Supplier>(entity =>
         {
             entity.HasKey(e => e.SupplierId).HasName("PRIMARY");
 
-            entity.Property(e => e.SupplierId).HasColumnType("int(11)");
             entity.Property(e => e.Address).HasColumnType("text");
             entity.Property(e => e.ContactEmail).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
@@ -262,10 +235,9 @@ public partial class InventoryDbContext : DbContext
 
             entity.HasIndex(e => e.Email, "Email").IsUnique();
 
-            entity.Property(e => e.UserId).HasColumnType("int(11)");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp");
+                .HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FullName).HasMaxLength(100);
             entity.Property(e => e.PasswordHash).HasColumnType("text");

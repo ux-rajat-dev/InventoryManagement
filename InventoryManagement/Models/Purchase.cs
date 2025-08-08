@@ -11,7 +11,7 @@ public partial class Purchase
 
     public decimal TotalAmount { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     public int? CreatedByUserId { get; set; }
 

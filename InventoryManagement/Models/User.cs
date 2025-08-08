@@ -15,7 +15,7 @@ public partial class User
 
     public string Role { get; set; } = null!;
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     public virtual ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
 
